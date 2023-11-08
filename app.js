@@ -1,5 +1,5 @@
-const search_term = 'a1405ed4af4bc83f1e312cd53d0a8854';
-const api_key = search_term;
+// const search_term = 'a1405ed4af4bc83f1e312cd53d0a8854';
+const api_key = 'a1405ed4af4bc83f1e312cd53d0a8854';
 
 // API Read access token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMTQwNWVkNGFmNGJjODNmMWUzMTJjZDUzZDBhODg1NCIsInN1YiI6IjY1NDQyNzAzOGM3YjBmMDBhZDE3OWE4ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BDOuAwY1V4m1RbE1kmJHU0u7hRQRYYrLgtIqzNJWs-w'
 
@@ -26,7 +26,7 @@ btn.addEventListener('click', add_searched_movies_to_dom);
 
 async function add_searched_movies_to_dom () {
   const data = await get_movie_by_search(input.value);
-  console.log(data);
+  // console.log(data);
 
   // main_grid_title.innerText = `search Results...`
   main_grid.innerHTML = data.map((e => {
@@ -46,7 +46,7 @@ async function add_searched_movies_to_dom () {
       </div>
     </div>
   </div>`;
-  }))
+  })).join('');
 }
   
 add_searched_movies_to_dom ();
