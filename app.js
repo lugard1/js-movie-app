@@ -18,6 +18,8 @@ async function get_movie_by_search (search_term) {
   return resData;
 }
 
+console.log(resData);
+
 // get_movie_by_search(search_term);
 
 btn.addEventListener('click', add_searched_movies_to_dom);
@@ -25,6 +27,26 @@ btn.addEventListener('click', add_searched_movies_to_dom);
 async function add_searched_movies_to_dom () {
   const data = await get_movie_by_search(input.value);
   console.log(data);
+
+  // main_grid_title.innerText = `search Results...`
+  main_grid.innerHTML = data.map((e => {
+    return `<div class="card" data-id="${e.id}">
+    <div class="img">
+      <img src="${data.images.backdrops[0].file_path}" style="width: 80%; height:50%"  alt="">
+      <div class="info">
+        <h2>${e.title}</h2>
+        <div class="single-info">
+          <span>Rate:</span>
+          <span>${e.vote_average}</span>
+        </div>
+        <div class="single-info">
+          <span>Release Date:</span>
+          <span>${e.release_date}</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  }))
 }
   
 add_searched_movies_to_dom ();
