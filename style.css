@@ -43,23 +43,23 @@ body {
 .search button:hover {background-color: rgba(255, 0, 0, 0.6);}
 .search button:active {transform: scale(0.9);}
 
-.movies-container {
+/* .movies-container {
   width: 100%;
-}
+}*/
 
-.movies-container h1 {
+h1 {
   text-align: center;
   color: #fff;
   padding: 10px;
 }
 
 /* removes the scrollbar  */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 /* Standard syntax (added for future-proofing) */
-scrollbar {
+/* scrollbar {
   display: none;
 }
 
@@ -67,17 +67,17 @@ scrollbar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  /* padding: 2rem; */
-}
+  padding: 2rem; 
+}  */
 
-.card {
+/* .card {
   box-shadow: 0 0 .5rem rgba(225, 0, 0, 1);
   width: 100%;
 
   overflow: hidden;
-  text-align: center;
+  text-align: center; */
   /* padding: 15px; */
-  color: #fff;
+  /* color: #fff;
   cursor: pointer;
   border-radius: .5rem;
   border: 1px solid;
@@ -95,4 +95,61 @@ scrollbar {
 
 .img {
   transition: 200ms ease-in-out transform;
+} */ */
+
+
+
+/* Add these styles to your existing style.css file or create a new one */
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search {
+  margin-bottom: 20px;
+}
+
+.movies-container {
+  text-align: center;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.info {
+  padding: 10px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.single-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  color: #777;
+  font-size: 0.9rem;
 }
