@@ -117,7 +117,8 @@
   
 // add_searched_movies_to_dom ();
 
-const api_key = 'a1405ed4af4bc83f1e312cd53d0a8854';
+// const api_key = 'a1405ed4af4bc83f1e312cd53d0a8854';
+
 
 const input = document.querySelector('.search input');
 const btn = document.querySelector('.search .btn');
@@ -125,7 +126,7 @@ const moviesGrid = document.querySelector('.favorites .movies-grid');
 
 async function searchMovies() {
   const query = input.value;
-  const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`);
+  const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`);
   const resData = await response.json();
   console.log(resData);
 
