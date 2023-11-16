@@ -119,6 +119,7 @@
 
 // const api_key = 'a1405ed4af4bc83f1e312cd53d0a8854';
 
+// import API_KEY from './config';
 
 const input = document.querySelector('.search input');
 const btn = document.querySelector('.search .btn');
@@ -160,6 +161,11 @@ function displayMovies(movies) {
 
     moviesGrid.appendChild(card);
   });
+
+  const cards = document.querySelectorAll('.card')
+  add_click_effect_to_card(cards)
 }
 
 btn.addEventListener('click', searchMovies);
+
+
