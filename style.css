@@ -11,6 +11,10 @@ body {
   background-color: #151515;
 }
 
+h2 {
+  color: #fff;
+}
+
 .search {
   display: flex;
   flex-direction: row;
@@ -108,6 +112,10 @@ h2 {
   font-size: 0.9rem;
 }
 
+.single-info span {
+  color: #fff;
+}
+
 .popup-container {
   position: fixed;
   width: 100%;
@@ -173,8 +181,14 @@ h2 {
   object-fit: cover;
 }
 
-.single-info-container { width: 200px; }
+.single-info-container {
+  width: 200px;
+}
 .right > *:not(h1) {margin: 1rem 0; }
+.single-info-container span {
+  color: #fff;
+}
+
 
 .trailer iframe {
   border: 2px solid rgba(255, .0, .0, .1);
@@ -205,4 +219,16 @@ h2 {
 
 .show-popup {
   transform: scale(1)
+}
+
+.genres h2 {
+  color: #fff;
+}
+
+.overview h2 {
+  color: #fff
+}
+
+.trailer h2 {
+  color: #fff;
 }
