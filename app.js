@@ -17,7 +17,7 @@ async function searchMovies() {
   const query = input.value;
   const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`);
   const resData = await response.json();
-  // console.log(resData);
+  console.log(resData);
 
   displayMovies(resData.results);
 }
@@ -65,10 +65,21 @@ async function searchMovies_by_id() {
   const resData = await response.json();
   // console.log(resData);
 
-  return resData.results;
+  return resData;
 }
 
 searchMovies_by_id();
+
+async function searchMovies_trailer(id) {
+  // const query = input.value;
+  const response = await fetch(`https://api.themoviedb.org/3/search/movie/${id}/videos?api_key=${API_KEY}`);
+  const resData = await response.json();
+  console.log(resData);
+
+  // return resData.results;
+}
+
+searchMovies_trailer()
 
 function show_popup(card) {
   const movieId = card.dataset.id;
