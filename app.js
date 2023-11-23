@@ -74,9 +74,9 @@ async function searchMovies_trailer(id) {
   // const query = input.value;
   const response = await fetch(`https://api.themoviedb.org/3/search/movie/${id}/videos?api_key=${API_KEY}`);
   const resData = await response.json();
-  console.log(resData);
+  // console.log(resData);
 
-  // return resData.results;
+  return resData.results;
 }
 
 searchMovies_trailer()
