@@ -14,7 +14,7 @@
     </div>
     <div class="movies-container favorites">
       <h1 class="h1">Favorites</h1>
-      <div class="movies-grid" id="moviesGrid" style="width: 100%; height:50%; padding:20px"></div>
+      <div class="movies-grid" id="moviesGrid"></div>
     </div>
   </div>
 
@@ -23,50 +23,44 @@
     <div class="content">
       <div class="left">
         <div class="poster-img">
-          <img src="https://unsplash.it/500/1000" alt="">
+          <img src="" alt="" id="popupPoster">
         </div>
         <div class="single-info">
           <span>Add to favorites</span>
-          <!-- unicode for the heart icon -->
           <span class="heart-icon">&#9829;</span>
         </div>
       </div>
       <div class="right">
-        <h1>Movie Title</h1>
-        <h3>Movie Tagline</h3>
+        <h1 class="movie-title">Movie Title</h1>
         <div class="single-info-container">
           <div class="single-info">
             <span>Language:</span>
-            <span>English</span>
+            <span id="popupLanguage">English</span>
           </div>
           <div class="single-info">
             <span>Length:</span>
-            <span>120 minutes</span>
+            <span id="popupLength">120 minutes</span>
           </div>
           <div class="single-info">
             <span>Rate:</span>
-            <span>10/10</span>
+            <span id="popupRate">10/10</span>
           </div>
           <div class="single-info">
             <span>Budget:</span>
-            <span>$1350000</span>
+            <span id="popupBudget">$1350000</span>
           </div>
           <div class="single-info">
             <span>Release Date:</span>
-            <span>05-07-2022</span>
+            <span id="popupReleaseDate">05-07-2022</span>
           </div>
         </div>
         <div class="genres">
           <h2>Genres</h2>
-          <ul>
-            <li>Action</li>
-            <li>Drama</li>
-            <li>Romance</li>
-          </ul>
+          <ul id="popupGenres"></ul>
         </div>
         <div class="overview">
           <h2>Overview</h2>
-          <p>
+          <p id="popupOverview">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo dolorem asperiores alias
             exercitationem itaque iure ducimus aliquid, eaque ut aperiam in vel cum harum amet sapiente
             repellendus beatae debitis earum!
@@ -74,14 +68,13 @@
         </div>
         <div class="trailer">
           <h2>Trailer</h2>
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" 
-           frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
     </div>
   </div>
 
   <script src="./config.js"></script>
-  <script src="./app.js"></script> 
+  <script src="./app.js"></script>
 </body>
 </html>
