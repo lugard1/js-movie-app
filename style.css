@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+  list-style: none;
 }
 
 body {
@@ -60,7 +61,7 @@ h1 {
 /* Add these styles to your existing style.css file or create a new one */
 
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -69,12 +70,14 @@ h1 {
 }
 
 .movies-container {
+  width: auto;
   text-align: center;
 }
 
 .movies-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
+  /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
   gap: 20px;
 }
 
