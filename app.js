@@ -118,6 +118,20 @@ function showPopup(card) {
       }
 
       popupContainer.classList.add('show-popup');
+
+      // Now that the popup is shown, select the heart icon and add the event listener
+      const heart_icon = document.querySelector('.popup-container.show-popup .heart-icon');
+      heart_icon.addEventListener('click', () => {
+        // Now we will check if the heart icon has change-color class if yes remove it if not add it
+        // But first, let's create that class in CSS
+        console.log('clicked heart icon');
+
+        if (heart_icon.classList.contains('change-color')) {
+          heart_icon.classList.remove('change-color');
+        } else {
+          heart_icon.classList.add('change-color');
+        }
+      });
     })
     .catch(error => {
       console.error('Error in showPopup:', error);

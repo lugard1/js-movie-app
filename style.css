@@ -244,3 +244,7 @@ h2 {
 .trailer h2 {
   color: #fff;
 }
+
+.change-color {
+  color: #ff0000;
+}
