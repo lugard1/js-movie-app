@@ -245,6 +245,11 @@ h2 {
   color: #fff;
 }
 
+/* Add these styles to your existing style.css file or create a new one */
 .change-color {
   color: #ff0000;
+}
+
+.change-white-color {
+  color: #fff;
 }
