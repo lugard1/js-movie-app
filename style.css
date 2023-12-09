@@ -246,10 +246,11 @@ h2 {
 }
 
 /* Add these styles to your existing style.css file or create a new one */
-.change-color {
+
+.favorite-heart-icon.change-color {
   color: #ff0000;
 }
 
-.change-white-color {
+.favorite-heart-icon.change-white-color {
   color: #fff;
 }
