@@ -7,6 +7,10 @@ const moviesGrid = document.querySelector('.favorites .movies-grid');
 const popupContainer = document.querySelector('.popup-container');
 const close = document.querySelector('.x-icon');
 
+// Declare main_grid globally
+// const main_grid = document.querySelector('.favorites .movies-grid');
+
+
 function addClickEffectToCard(cards) {
   cards.forEach(card => {
     card.addEventListener('click', () => showPopup(card));
@@ -18,7 +22,7 @@ async function searchMovies() {
   const query = input.value;
   const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`);
   const resData = await response.json();
-  console.log(resData);
+  // console.log(resData);
 
   displayMovies(resData.results);
 }
@@ -122,18 +126,18 @@ function showPopup(card) {
    // Wait for the popup to be displayed before selecting the heart icon
    const heart_icon = document.querySelector('.popup-container.show-popup .favorite-heart-icon');
    heart_icon.addEventListener('click', () => {
-     // Now we will check if the heart icon has the change-color class; if yes, remove it; if not, add it
-     // But first, let's create that class in CSS
-     console.log('clicked heart icon');
- 
-     if (heart_icon.classList.contains('change-color')) {
-       heart_icon.classList.remove('change-color');
-       heart_icon.classList.add('change-white-color');
-      } else {
-       heart_icon.classList.remove('change-white-color');
-       heart_icon.classList.add('change-color');
-      }
-    });
+    if (heart_icon.classList.contains('change-color')) {
+      remove_LS(movieId);
+      heart_icon.classList.remove('change-color');
+      heart_icon.classList.add('change-white-color');
+    } else {
+      add_to_LS(movieId);
+      heart_icon.classList.remove('change-white-color');
+      heart_icon.classList.add('change-color');
+    }
+    fetch_favorite_movies();
+  });
+  
     })
     .catch(error => {
       console.error('Error in showPopup:', error);
@@ -143,3 +147,118 @@ function showPopup(card) {
 close.addEventListener('click', () => {
   popupContainer.classList.remove('show-popup');
 });
+
+// Now when we add it to favorites we want the movie to be shown to the favorite section but we also
+// want it to be saved for other times even after we close the browser. For that we will use localStorage
+// let's create the functions for local storage...
+
+// Local Storage
+function get_LS () {
+  const movie_ids = JSON.parse(localStorage.getItem('movie-id'));
+  return movie_ids === null ? [] : movie_ids
+}
+function add_to_LS (id) {
+  const movie_ids = get_LS();
+  localStorage.setItem('movie-id', JSON.stringify([...movie_ids, id]))
+}
+function remove_LS (id) {
+  const movie_ids = get_LS();
+  localStorage.setItem('movie-id', JSON.stringify(movie_ids.filter(e => e !== id)))
+}
+
+// So now lets call these functions so you can see better what they do
+
+// Now let's add these movies to favorites but first we will create a function that
+// fetches the localStorage everytime we add a movie to favorites or remove from it..
+
+// we want to call this function immediately when we get to website and everytime we 
+// make changes to the heart icon Remove or Add it
+
+// async function get_movie_by_id(movieId) {
+//   const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`);
+//   const movieDetails = await response.json();
+//   return movieDetails;
+// }
+
+async function get_movie_by_id(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`;
+  console.log('Request URL:', url);
+
+  const response = await fetch(url);
+  console.log('Response Status:', response.status);
+
+  const movieDetails = await response.json();
+  console.log('Movie Details:', movieDetails);
+
+  return movieDetails;
+}
+
+
+fetch_favorite_movies()
+async function fetch_favorite_movies() {
+  moviesGrid.innerHTML = '';
+  const movies_LS = await get_LS();
+  const movies = [];
+
+  for (let i = 0; i < movies_LS.length; i++) {
+    // Declare movie_id with const or let
+    const movie_id = movies_LS[i];
+    
+    let movie = await get_movie_by_id(movie_id);
+    add_favorites_to_dom_from_LS(movie);
+    movies.push(movie);
+  }
+}
+
+
+function add_favorites_to_dom_from_LS(movie_data) {
+  const listItem = document.createElement('li');
+  listItem.classList.add('favorite-item');
+
+  // Set the dataset.id to the movie id
+  listItem.dataset.id = movie_data.id;
+
+  listItem.innerHTML = `
+    <div class="img">
+      <img src="https://image.tmdb.org/t/p/w500${movie_data.poster_path}" style="width: 80%; height: 50%" alt="${movie_data.title}">
+      <div class="info">
+        <h2>${movie_data.title}</h2>
+        <div class="single-info">
+          <span>Rate:</span>
+          <span>${movie_data.vote_average}/10</span>
+        </div>
+        <div class="single-info">
+          <span>Release Date:</span>
+          <span>${movie_data.release_date}</span>
+        </div>
+      </div>
+    </div>
+    <div class="overlay">
+      <button class="delete-button">Delete</button>
+    </div>
+  `;
+
+  moviesGrid.appendChild(listItem);
+
+  const deleteButton = listItem.querySelector('.overlay .delete-button');
+  deleteButton.addEventListener('click', () => {
+    const movieId = listItem.dataset.id;
+    handleDelete(movieId);
+  });
+
+  const favoriteItems = document.querySelectorAll('.favorite-item');
+  addClickEffectToCard(favoriteItems);
+}
+
+
+function handleDelete(movieId) {
+  console.log('Deleting movie with ID:', movieId);
+
+  // Implement your delete logic here, e.g., remove from localStorage, update UI, etc.
+  remove_LS(movieId);
+
+  // Verify if the movie was removed from localStorage
+  console.log('Movies in localStorage after delete:', get_LS());
+
+  fetch_favorite_movies(); // Refresh the favorites display
+}
