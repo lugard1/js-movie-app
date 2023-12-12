@@ -1,15 +1,9 @@
-// Your API_KEY should be defined in config.js
-
 const input = document.querySelector('.search input');
 const btn = document.querySelector('.search .btn');
 const moviesGrid = document.querySelector('.favorites .movies-grid');
 
 const popupContainer = document.querySelector('.popup-container');
 const close = document.querySelector('.x-icon');
-
-// Declare main_grid globally
-// const main_grid = document.querySelector('.favorites .movies-grid');
-
 
 function addClickEffectToCard(cards) {
   cards.forEach(card => {
@@ -148,10 +142,6 @@ close.addEventListener('click', () => {
   popupContainer.classList.remove('show-popup');
 });
 
-// Now when we add it to favorites we want the movie to be shown to the favorite section but we also
-// want it to be saved for other times even after we close the browser. For that we will use localStorage
-// let's create the functions for local storage...
-
 // Local Storage
 function get_LS () {
   const movie_ids = JSON.parse(localStorage.getItem('movie-id'));
@@ -161,52 +151,74 @@ function add_to_LS (id) {
   const movie_ids = get_LS();
   localStorage.setItem('movie-id', JSON.stringify([...movie_ids, id]))
 }
-function remove_LS (id) {
+// function remove_LS(id) {
+//   console.log('Removing movie with ID:', id);
+//   const movie_ids = get_LS();
+//   localStorage.setItem('movie-id', JSON.stringify(movie_ids.filter(e => e !== id)));
+//   console.log('Movies in localStorage after delete:', get_LS());
+// }
+
+function remove_LS(id) {
+  if (!id) {
+    console.warn('Invalid movie ID:', id);
+    return;
+  }
+
   const movie_ids = get_LS();
-  localStorage.setItem('movie-id', JSON.stringify(movie_ids.filter(e => e !== id)))
+  const updated_movie_ids = movie_ids.filter(e => e !== id && e !== null);
+
+  localStorage.setItem('movie-id', JSON.stringify(updated_movie_ids));
+  console.log('Movies in localStorage after delete:', updated_movie_ids);
 }
 
-// So now lets call these functions so you can see better what they do
 
-// Now let's add these movies to favorites but first we will create a function that
-// fetches the localStorage everytime we add a movie to favorites or remove from it..
-
-// we want to call this function immediately when we get to website and everytime we 
-// make changes to the heart icon Remove or Add it
-
-// async function get_movie_by_id(movieId) {
-//   const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`);
-//   const movieDetails = await response.json();
-//   return movieDetails;
-// }
 
 async function get_movie_by_id(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`;
-  console.log('Request URL:', url);
+  // console.log('Request URL:', url);
 
-  const response = await fetch(url);
-  console.log('Response Status:', response.status);
+  try {
+    const response = await fetch(url);
 
-  const movieDetails = await response.json();
-  console.log('Movie Details:', movieDetails);
+    if (!response.ok) {
+      // console.error('Error fetching movie details:', response.status);
+      return null;
+    }
 
-  return movieDetails;
+    const movieDetails = await response.json();
+    // console.log('Movie Details:', movieDetails);
+
+    return movieDetails;
+  } catch (error) {
+    // console.error('Error fetching movie details:', error);
+    return null;
+  }
 }
 
-
 fetch_favorite_movies()
+
 async function fetch_favorite_movies() {
   moviesGrid.innerHTML = '';
   const movies_LS = await get_LS();
   const movies = [];
 
-  for (let i = 0; i < movies_LS.length; i++) {
-    // Declare movie_id with const or let
-    const movie_id = movies_LS[i];
-    
+  // Filter out null values from the movie IDs
+  const validMovieIds = movies_LS.filter(movieId => movieId !== null);
+
+  // Use a map function to ensure consecutive indices
+  const validMovieIdsConsecutive = validMovieIds.map((_, index) => index);
+
+  for (let i = 0; i < validMovieIdsConsecutive.length; i++) {
+    const movieIndex = validMovieIdsConsecutive[i];
+    const movie_id = validMovieIds[movieIndex];
+
     let movie = await get_movie_by_id(movie_id);
-    add_favorites_to_dom_from_LS(movie);
-    movies.push(movie);
+
+    // Only add the movie to the UI if it's successfully fetched
+    if (movie) {
+      add_favorites_to_dom_from_LS(movie);
+      movies.push(movie);
+    }
   }
 }
 
@@ -250,15 +262,14 @@ function add_favorites_to_dom_from_LS(movie_data) {
   addClickEffectToCard(favoriteItems);
 }
 
-
 function handleDelete(movieId) {
-  console.log('Deleting movie with ID:', movieId);
-
-  // Implement your delete logic here, e.g., remove from localStorage, update UI, etc.
+  // Remove the movie from localStorage
   remove_LS(movieId);
 
   // Verify if the movie was removed from localStorage
   console.log('Movies in localStorage after delete:', get_LS());
 
-  fetch_favorite_movies(); // Refresh the favorites display
+  // Refresh the favorites display
+  fetch_favorite_movies();
 }
+
